@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://thymeleaf.org" th:fragment="Layout(content)">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css
+" />
+
+	<title th:text="${title}">Hello, world!</title>
+
+	<link rel="stylesheet" th:href="@{/css/style.css}" />
+
+
+
+
+	<style>
+		@media only screen and (max-width:600px) {
+			.sidebar {
+				display: none;
+				width: 80% !important;
+				background: white;
+				height: 100vh;
+				position: fixed;
+				padding-top: 20px;
+			}
+
+			.content {
+				margin-left: 0% !important;
+			}
+		}
+
+		.sidebar {
+			width: 20%;
+			background: white;
+			height: 100%;
+			position: fixed;
+			padding-top: 45px;
+		}
+
+		.sidebar a {
+			display: block;
+			width: 100%;
+			padding: 10px 25px;
+			text-decoration: none;
+			color: gray;
+		}
+
+		.sidebar a:hover {
+			background: #e2e2e2;
+		}
+
+		.sidebar .divider {
+			height: .5px;
+			width: 100%;
+			background: #e2e2e2;
+			margin-top: 10px;
+		}
+
+
+
+		.sidebar .crossBtn {
+			position: absolute;
+			top: 0;
+			right: 35px;
+			font-size: 30px;
+			cursor: pointer;
+		}
+
+		.sidebar i {
+			padding: 5px;
+		}
+
+		.my_profile_pic {
+			height: 35px;
+			width: 35px;
+			object-fit: cover;
+			border-radius: 50%;
+			border: 1px solid black;
+		}
+	</style>
+</head>
+
+<body>
+	<!--Navbar Starting  -->
+
+	<nav class="fixed-top navbar navbar-expand-lg navbar-dark bg-primary">
+		<a class="navbar-brand" href="#">SmartContactManager</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+
+			<ul class="navbar-nav ml-auto  text-uppercase">
+
+				<li class="nav-item active">
+					<a th:href="@{/}" class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+				</li>
+
+
+
+
+
+				<li class="nav-item">
+					<a class="nav-link " href="#" tabindex="-1" aria-disabled="true"><span
+							th:text="${user.name}"></span></a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link " th:href="@{/logout}" href="#" tabindex="-1" aria-disabled="true">Logout</a>
+				</li>
+
+			</ul>
+
+		</div>
+	</nav>
+
+
+	<!-- Navbar end -->
+
+	<!-- Side Bar -->
+	<div class="sidebar mt-5">
+
+		<span onclick="toggleSidebar()" class="crossBtn">&times;</span>
+
+		<a th:href="@{/user/index}"><i class="fas fa-home"></i>Home</a>
+		<a th:href="@{/user/show-contacts/0}"><i class="fas fa-id-card-alt"></i>View contacts</a>
+		<a th:href="@{/user/add-contact}"><i class="fas fa-pencil-alt"></i>Add Contacts</a>
+		<a th:href="@{/user/profile}"><i class="fas fa-user-circle"></i>Your Profile</a>
+		<a href="#"><i class="fas fa-cogs"></i>settings</a>
+		<a th:href="@{/logout}"><i class="fas fa-sign-out-alt"></i>Logout</a>
+
+		<div class="divider"></div>
+
+	</div>
+	<!-- Side bar end -->
+
+	<!-- content -->
+	<div class="content">
+		<i onclick="toggleSidebar()" class="fas fa-bars mt-5"></i>
+
+
+
+
+		<div th:replace="${content}"></div>
+	</div>
+
+
+	<!-- <div th:replace="${content}"></div>  -->
+
+
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+		crossorigin="anonymous"></script>
+
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+	<script>
+		function deleteContact(cId) {
+			swal({
+				title: "Are you sure?",
+				text: "Once deleted, you will not be able to recover this imaginary file!",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			})
+				.then((willDelete) => {
+					if (willDelete) {
+						window.location="/user/delete/"+cId;
+					} else {
+						swal("Your cotact file is safe!");
+					}
+				});
+ }
+	</script>
+
+	<script th:src="@{/js/script.js}">
+
+	</script>
+
+</body>
+
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="base::Layout(~{::section})">
+
+<head>
+	<meta charset="ISO-8859-1">
+	<title th:text="${title}">Insert title here</title>
+</head>
+
+<body>
+
+	<section>
+		<div class="container">
+
+			<div class="row">
+
+				<div class="col-md-6 offset-md-3">
+
+					<div class="my-card mt-2 mb-2">
+
+
+						<!--	<div class="container text-center">
+							
+						<img style="height: 50px;" th:src="@{/img/icon.png}" />
+
+						</div>  -->
+						<!-- with th:classappend = "${session.message.type}" it will apend class with its type
+						(alert-success which is in green color) and th:text  it will print session Message class content -->
+
+						<div th:if="${session.message}" th:classappend="${session.message.type}" class="alert ">
+							<p class="text-center" th:text="${session.message.content}"></p>
+
+							<!-- to remove message that is shown , so it will only show one time -->
+
+
+
+						</div>
+
+
+						<h3 class="text-center">
+							Register Here
+						</h3>
+
+						<form novalidate th:action="@{/do_register}" method="post" th:object="${user}">
+
+							<!-- ----------------------  Name field ------------------------- -->
+
+							<div class="form-group">
+
+								<label for="name_fill">Name :</label>
+								<input type="text" class="form-control "
+								th:classappend="${#fields.hasErrors('name') ? 'is-invalid' : ''}"
+								   id="name_fill" 
+								   aria-describedby="emailHelp"
+									placeholder="Enter here name"  
+									th:value="${user.name}" name="name">
+									
+									<div  class="invalid-feedback"  th:each=" e : ${#fields.errors('name')}" th:text="${e}">
+                                    </div>
+									
+								
+							</div>
+
+
+							<!-- ----------------------  Email field -------------------------  -->
+
+							<div class="form-group">
+
+								<label for="email_fill">Email :</label>
+								<input type="email" class="form-control"
+								th:classappend="${#fields.hasErrors('email') ? 'is-invalid' : ''}"
+								id="email_fill" aria-describedby="emailHelp"
+									placeholder="Enter here email"  
+									th:value="${user.email}" name="email" />
+									<div  class="invalid-feedback"  th:each=" e : ${#fields.errors('email')}" th:text="${e}">
+                                    </div>
+
+							</div>
+
+
+							<!-- ----------------------  Password field ------------------------- -->
+
+							<div class="form-group">
+
+								<label for="password_fill">Password :</label>
+								<input type="password" class="form-control"
+								th:classappend="${#fields.hasErrors('password') ? 'is-invalid' : ''}"
+								 id="password_fill"
+									aria-describedby="emailHelp" placeholder="Enter here password" 
+									name="password" />
+									<div  class="invalid-feedback"  th:each=" e : ${#fields.errors('password')}" th:text="${e}">
+                                    </div>
+
+
+							</div>
+
+
+							<!-- ----------------------  User about field -------------------------  -->
+
+							<div class="form-group">
+
+								<textarea name="about" th:value="${user.about}" placeholder="Enter about yourself"
+									rows="10" class="form-control"></textarea>
+
+							</div>
+
+							<!-- ----------------------  Terms and Condition  ------------------------- -->
+							<div class="form-group form-check">
+								<input type="checkbox" name="agreement"
+								class="form-check-input"
+ 
+								id="agreement" />
+								
+
+								<label for="agreement">Accept term and conditions</label>
+
+							</div>
+
+							<!--    -------------------------- Button field -----------------------      -->
+
+							<div class="container text-center">
+								<button type="submit" class="btn bg-primary text-white">submit</button>
+
+								<button type="reset" class="btn btn-warning text-white">reset</button>
+							</div>
+
+
+						</form>
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+	</section>
+
+
+</body>
+
+</html>
